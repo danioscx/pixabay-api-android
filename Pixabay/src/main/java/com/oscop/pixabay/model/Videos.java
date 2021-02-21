@@ -311,6 +311,12 @@ public class Videos extends Models {
         return userImageURL;
     }
 
+    public String getVideoThumbnail() {
+        String url = "https://i.vimeocdn.com/video/" + pictureId;
+        String size = "_640x360.jpg";
+        return url + size;
+    }
+
     public Videos withUserImageURL(String userImageURL) {
         this.userImageURL = userImageURL;
         return this;

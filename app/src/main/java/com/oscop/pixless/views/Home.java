@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.oscop.pixabay.Pixabay;
 import com.oscop.pixabay.model.Images;
+import com.oscop.pixabay.utils.Colors;
 import com.oscop.pixless.R;
 import com.oscop.pixless.utils.adapters.RecyclerViewAdapter;
 
@@ -40,7 +41,8 @@ public class Home extends BaseViews implements BaseViews.OnBackPressed {
     private void setContent() {
         Pixabay pixabay = Pixabay.getInstance(requireContext())
                 .apiKey(API_KEY)
-                .query("nature");
+                .editorChoice(true)
+                .colors(Colors.BROWN);
         pixabay.setOnPixabayImageRequest(pixabay, new Pixabay.OnPixabayImageRequest() {
 
             @Override

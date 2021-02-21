@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.oscop.pixabay.model.Images;
 import com.oscop.pixabay.model.Models;
+import com.oscop.pixabay.model.Videos;
 import com.oscop.pixless.R;
 import com.oscop.pixless.utils.OnItemClickListener;
 
@@ -55,17 +56,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             imageView = itemView.findViewById(R.id.recycler_view_image_view);
         }
 
-        void bind(Object cls, OnItemClickListener listener) {
-            if (cls instanceof Images) {
+        void bind(Object object, OnItemClickListener listener) {
+            if (object instanceof Images) {
                 Glide.with(itemView.getContext())
-                        .load(((Images) cls).getPreviewURL())
+                        .load(((Images) object).getPreviewURL())
+                        .centerCrop()
+                        .into(imageView);
+            } else if (object instanceof Videos) {
+                Glide.with(itemView.getContext())
+                        .load(((Videos) object).getVideoThumbnail())
                         .centerCrop()
                         .into(imageView);
             }
 
-            itemView.setOnClickListener(v -> {
-                listener.onItemClick(cls);
-            });
+            itemView.setOnClickListener(v -> listener.onItemClick(object));
         }
     }
 }
