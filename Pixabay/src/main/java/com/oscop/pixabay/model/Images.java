@@ -2,7 +2,8 @@ package com.oscop.pixabay.model;
 
 import androidx.annotation.NonNull;
 
-public class Images {
+
+public class Images extends Models {
 
     private String id;
     private String pageURL;

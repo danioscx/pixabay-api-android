@@ -1,25 +1,22 @@
 package com.oscop.pixless;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
 
-import com.oscop.pixabay.Pixabay;
-import com.oscop.pixabay.model.Videos;
-import com.oscop.pixabay.utils.VideoType;
-
-import java.util.List;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.oscop.pixless.views.Home;
+import com.oscop.pixless.views.Videos;
 
 public class MainActivity extends AppCompatActivity {
-
-    public static final String API_KEY = "16013870-0f4196b948c4f65ced4be7fff";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-       /* Pixabay pixabay = Pixabay.getInstance(this)
+/*
+       *//* Pixabay pixabay = Pixabay.getInstance(this)
                 .apiKey(API_KEY)
                 .editorChoice(true)
                 .query("nature");
@@ -35,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
             public void onError(String error) {
                 System.out.println(error);
             }
-        });*/
+        });*//*
         Pixabay.Video videos = new Pixabay.Video(this).apiKey(API_KEY)
                 .videoType(VideoType.ANIMATION);
 
@@ -51,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*PixabayRequestResult result = response -> {
+        *//*PixabayRequestResult result = response -> {
             try {
                 JSONArray array = response.getJSONArray("hits");
                 for (int i = 0; i < array.length() ; i++) {
@@ -68,5 +65,22 @@ public class MainActivity extends AppCompatActivity {
 
         PixabayRequest.with(this)
                 .from(videos).putIn(result);*/
+        selectFragment(new Home());
+        BottomNavigationView navigationView = findViewById(R.id.bottom_navigation_view);
+        navigationView.setOnNavigationItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.home) {
+                selectFragment(new Home());
+            } else if (item.getItemId() == R.id.videos) {
+                selectFragment(new Videos());
+            }
+            return true;
+        });
+    }
+
+    private void selectFragment(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_fragment, fragment)
+                .commit();
     }
 }
