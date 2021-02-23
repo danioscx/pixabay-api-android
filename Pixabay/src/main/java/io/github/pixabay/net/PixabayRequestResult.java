@@ -1,4 +1,4 @@
-package com.github.pixabay.net;
+package io.github.pixabay.net;
 
 import org.json.JSONObject;
 

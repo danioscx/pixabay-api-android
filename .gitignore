@@ -1,6 +1,7 @@
 *.iml
 .gradle
 .idea
+secring.gpg
 /local.properties
 /.idea/caches
 /.idea/libraries

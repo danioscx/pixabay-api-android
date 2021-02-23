@@ -1,4 +1,4 @@
-package com.github.pixabay.utils;
+package io.github.pixabay.utils;
 
 public enum ImageType {
 

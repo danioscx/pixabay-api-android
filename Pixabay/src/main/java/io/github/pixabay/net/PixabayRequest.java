@@ -1,4 +1,4 @@
-package com.github.pixabay.net;
+package io.github.pixabay.net;
 
 import android.content.Context;
 
@@ -8,7 +8,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.github.pixabay.Pixabay;
+import io.github.pixabay.Pixabay;
 
 @Deprecated
 public class PixabayRequest {

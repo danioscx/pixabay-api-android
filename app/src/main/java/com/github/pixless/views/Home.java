@@ -11,9 +11,9 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.github.pixabay.Pixabay;
-import com.github.pixabay.model.Images;
-import com.github.pixabay.utils.Colors;
+import io.github.pixabay.Pixabay;
+import io.github.pixabay.model.Images;
+import io.github.pixabay.utils.Colors;
 import com.github.pixless.R;
 import com.github.pixless.utils.adapters.RecyclerViewAdapter;
 

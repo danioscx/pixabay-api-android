@@ -1,4 +1,4 @@
-package com.github.pixabay;
+package io.github.pixabay;
 
 import android.content.Context;
 
@@ -8,14 +8,14 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.github.pixabay.utils.Category;
-import com.github.pixabay.utils.Colors;
-import com.github.pixabay.utils.ImageType;
-import com.github.pixabay.model.Images;
-import com.github.pixabay.utils.Language;
-import com.github.pixabay.utils.Order;
-import com.github.pixabay.utils.Orientation;
-import com.github.pixabay.utils.VideoType;
+import io.github.pixabay.utils.Category;
+import io.github.pixabay.utils.Colors;
+import io.github.pixabay.utils.ImageType;
+import io.github.pixabay.model.Images;
+import io.github.pixabay.utils.Language;
+import io.github.pixabay.utils.Order;
+import io.github.pixabay.utils.Orientation;
+import io.github.pixabay.utils.VideoType;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,6 +23,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.github.pixabay.model.Videos;
 
 public class Pixabay {
 
@@ -39,6 +41,17 @@ public class Pixabay {
     public interface OnPixabayImageRequest {
         void onResult(List<Images> images);
         void onError(String error);
+    }
+
+    public interface OnRequestResponse {
+        void onResult(JSONObject response);
+        void onError(String error);
+    }
+
+    public void setOnPixabayImageRequest(@NonNull Pixabay pixabay, @NonNull OnRequestResponse request) {
+        JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET,
+                pixabay.toString(), null, request::onResult, error -> request.onError(error.getMessage()));
+        queue.add(objectRequest);
     }
 
     public void setOnPixabayImageRequest(@NonNull Pixabay pixabay, OnPixabayImageRequest request) {
@@ -189,8 +202,20 @@ public class Pixabay {
         final String video = "https://pixabay.com/api/videos/?key=";
 
         public interface OnPixabayVideoRequest {
-            void onResult(List<com.github.pixabay.model.Videos> videos);
+            void onResult(List<Videos> videos);
             void onError(String error);
+        }
+
+        public interface OnRequestResponse {
+            void onResult(JSONObject response);
+            void onError(String error);
+        }
+
+        public void setOnPixabayVideoRequest(@NonNull Video pixabay, @NonNull OnRequestResponse request) {
+            JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET,
+                    pixabay.toString(), null, request::onResult
+            , error -> request.onError(error.getMessage()));
+            queue.add(objectRequest);
         }
 
         public void setOnPixabayVideoRequest(@NonNull Video pixabay, OnPixabayVideoRequest request) {
@@ -198,7 +223,7 @@ public class Pixabay {
                     pixabay.toString(), null, response -> {
                 try {
                     JSONArray array = response.getJSONArray("hits");
-                    List<com.github.pixabay.model.Videos> videos = new ArrayList<>();
+                    List<Videos> videos = new ArrayList<>();
                     for (int i = 0; i < array.length() ; i++) {
                         JSONObject object = array.getJSONObject(i);
                         JSONObject JsonVideos = object.getJSONObject("videos");
@@ -206,7 +231,7 @@ public class Pixabay {
                         JSONObject medium = JsonVideos.getJSONObject("medium");
                         JSONObject small = JsonVideos.getJSONObject("small");
                         JSONObject tiny = JsonVideos.getJSONObject("tiny");
-                        com.github.pixabay.model.Videos video = com.github.pixabay.model.Videos.getInstance()
+                        Videos video = Videos.getInstance()
                                 .withId(object.getString("id"))
                                 .withPageURL(object.getString("pageURL"))
                                 .withType(object.getString("type"))
