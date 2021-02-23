@@ -17,7 +17,7 @@ Pixabay pixabay = Pixabay.getInstance(requireContext())
                 .editorChoice(true)
                 .colors(Colors.BROWN);
 ```
-implementation your request into default model__
+implementation your request into default model <br />
 you don't need create model just put Images class in your recyclerview adapter or listview adapater
 ```Java
 pixabay.setOnPixabayImageRequest(pixabay, new Pixabay.OnPixabayImageRequest() {
@@ -40,7 +40,7 @@ Pixabay.Video video = new Pixabay.Video(requireContext())
                 .apiKey(API_KEY)
                 .videoType(VideoType.ANIMATION);
 ```
-implement video request__
+implement video request <br />
 same with request images you don't need create model all has been set in library.
 
 ```Java
