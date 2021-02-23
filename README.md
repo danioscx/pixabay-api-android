@@ -61,7 +61,7 @@ video.setOnPixabayVideoRequest(video, new Pixabay.Video.OnPixabayVideoRequest() 
 
 making new request with custom model
 
-``Java
+```Java
 Pixabay pixabay = Pixabay.getInstance(requireContext())
                 .apiKey(API_KEY)
                 .editorChoice(true)
