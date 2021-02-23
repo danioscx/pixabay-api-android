@@ -1,7 +1,8 @@
 # pixabay-api-android
-unofficial Pixabay api for android
+unofficial Pixabay api for android <br />
 ![alt text](https://github.com/danioscx/pixabay-api-android/blob/main/screenshot/Screenshot_20210224-031453.png)
 ![alt text](https://github.com/danioscx/pixabay-api-android/blob/main/screenshot/Screenshot_20210224-031502.png)
+<br />
 ## installation
 Download this repository 
 ```github
