@@ -10,6 +10,7 @@ after download open your android studio then click File->New->Import module
 then locate this repo
 
 ### How to use 
+#### Image request
 making new simple image request
 ```Java
 Pixabay pixabay = Pixabay.getInstance(requireContext())
@@ -33,6 +34,7 @@ pixabay.setOnPixabayImageRequest(pixabay, new Pixabay.OnPixabayImageRequest() {
             }
         });
 ```
+#### Video request
 Making new simple video request 
 
 ```Java
@@ -58,7 +60,7 @@ video.setOnPixabayVideoRequest(video, new Pixabay.Video.OnPixabayVideoRequest() 
         });
         
 ```
-
+#### request with custom model
 making new request with custom model
 
 ```Java
