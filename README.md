@@ -74,7 +74,7 @@ Pixabay pixabay = Pixabay.getInstance(requireContext())
 implement request
 
 ```Java
-video.setOnPixabayVideoRequest(video, new Pixabay.Video.OnRequestResponse() {
+pixabay.setOnPixabayVideoRequest(pixabay, new Pixabay.OnRequestResponse() {
             @Override
             public void onResult(JSONObject response) {
                 //working your custom model here
