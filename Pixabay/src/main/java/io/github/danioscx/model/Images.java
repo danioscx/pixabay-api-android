@@ -1,4 +1,4 @@
-package io.github.pixabay.model;
+package io.github.danioscx.model;
 
 import androidx.annotation.NonNull;
 

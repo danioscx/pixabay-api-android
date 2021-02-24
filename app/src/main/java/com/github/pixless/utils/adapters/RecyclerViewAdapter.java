@@ -9,9 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import io.github.pixabay.model.Images;
-import io.github.pixabay.model.Models;
-import io.github.pixabay.model.Videos;
+import io.github.danioscx.model.Images;
+import io.github.danioscx.model.Models;
+import io.github.danioscx.model.Videos;
 import com.github.pixless.R;
 import com.github.pixless.utils.OnItemClickListener;
 

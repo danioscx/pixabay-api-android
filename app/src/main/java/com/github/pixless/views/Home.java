@@ -1,5 +1,6 @@
 package com.github.pixless.views;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,18 +9,19 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import io.github.pixabay.Pixabay;
-import io.github.pixabay.model.Images;
-import io.github.pixabay.utils.Colors;
+import io.github.danioscx.Pixabay;
+import io.github.danioscx.model.Images;
+import io.github.danioscx.utils.Colors;
 import com.github.pixless.R;
 import com.github.pixless.utils.adapters.RecyclerViewAdapter;
 
 import java.util.List;
 
-public class Home extends BaseViews implements BaseViews.OnBackPressed {
+public class Home extends BaseViews implements Pixabay.OnPixabayImageRequest {
 
     public static final String API_KEY = "16013870-0f4196b948c4f65ced4be7fff";
 
@@ -38,31 +40,32 @@ public class Home extends BaseViews implements BaseViews.OnBackPressed {
         setContent();
     }
 
-    private void setContent() {
+    private synchronized void setContent() {
         Pixabay pixabay = Pixabay.getInstance(requireContext())
                 .apiKey(API_KEY)
                 .editorChoice(true)
                 .colors(Colors.BROWN);
-        pixabay.setOnPixabayImageRequest(pixabay, new Pixabay.OnPixabayImageRequest() {
-
-            @Override
-            public void onResult(List<Images> images) {
-                recyclerView.setAdapter(new RecyclerViewAdapter(images, object ->
-                        Toast.makeText(requireContext(), ((Images)object).getId() + "", Toast.LENGTH_SHORT).show()));
-                LinearLayoutManager manager = new LinearLayoutManager(requireContext());
-                manager.setOrientation(RecyclerView.VERTICAL);
-                recyclerView.setLayoutManager(manager);
-            }
-
-            @Override
-            public void onError(String error) {
-                System.out.println("Error: " + error);
-            }
-        });
+        System.out.println(pixabay.toString());
+        pixabay.setOnPixabayImageRequest(pixabay,this);
     }
 
     @Override
-    public void onBackPress() {
-        requireActivity().getSupportFragmentManager().popBackStack();
+    public void onResult(List<Images> images) {
+        System.out.println(images.size());
+        recyclerView.setAdapter(new RecyclerViewAdapter(images, object -> {
+            Intent intent = new Intent(requireContext(), ViewImages.class);
+            intent.putExtra("id", ((Images) object).getId());
+            startActivity(intent);
+        }));
+
+
+        LinearLayoutManager manager = new LinearLayoutManager(requireContext());
+        manager.setOrientation(RecyclerView.VERTICAL);
+        recyclerView.setLayoutManager(manager);
+    }
+
+    @Override
+    public void onError(String error) {
+        System.out.println("Error: " + error);
     }
 }

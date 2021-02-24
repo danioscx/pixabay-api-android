@@ -1,4 +1,4 @@
-package io.github.pixabay;
+package io.github.danioscx;
 
 import android.content.Context;
 
@@ -8,14 +8,14 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import io.github.pixabay.utils.Category;
-import io.github.pixabay.utils.Colors;
-import io.github.pixabay.utils.ImageType;
-import io.github.pixabay.model.Images;
-import io.github.pixabay.utils.Language;
-import io.github.pixabay.utils.Order;
-import io.github.pixabay.utils.Orientation;
-import io.github.pixabay.utils.VideoType;
+import io.github.danioscx.utils.Category;
+import io.github.danioscx.utils.Colors;
+import io.github.danioscx.utils.ImageType;
+import io.github.danioscx.model.Images;
+import io.github.danioscx.utils.Language;
+import io.github.danioscx.utils.Order;
+import io.github.danioscx.utils.Orientation;
+import io.github.danioscx.utils.VideoType;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,11 +24,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.pixabay.model.Videos;
+import io.github.danioscx.model.Videos;
 
 public class Pixabay {
-
-    private static Pixabay instance;
 
     private String apiKey;
     private String endPoint;
@@ -70,7 +68,7 @@ public class Pixabay {
                                     .withPreviewURL(object.getString("previewURL"))
                                     .withPreviewWidth(object.getString("previewWidth"))
                                     .withPreviewHeight(object.getString("previewHeight"))
-                                    .withWebFormatURL(object.getString("previewHeight"))
+                                    .withWebFormatURL(object.getString("webformatURL"))
                                     .withWebFormatWidth(object.getString("webformatWidth"))
                                     .withWebFormatHeight(object.getString("webformatHeight"))
                                     .withLargeImageURL(object.getString("largeImageURL"))
@@ -98,12 +96,10 @@ public class Pixabay {
     public Pixabay() {
     }
 
-    public static Pixabay getInstance(Context context) {
-        queue = Volley.newRequestQueue(context);
-        if (instance == null) {
-            instance = new Pixabay();
-        }
-        return instance;
+    @NonNull
+    public static Pixabay getInstance(@NonNull Context context) {
+        queue = Volley.newRequestQueue(context.getApplicationContext());
+        return new Pixabay();
     }
 
 

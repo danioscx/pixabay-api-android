@@ -1,4 +1,4 @@
-package io.github.pixabay.utils;
+package io.github.danioscx.utils;
 
 public enum Colors {
 
