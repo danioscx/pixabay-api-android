@@ -4,12 +4,9 @@ unofficial Pixabay api for android <br />
 <img src="https://github.com/danioscx/pixabay-api-android/blob/main/screenshot/Screenshot_20210224-031502.png" width="45%"> </img>
 <br />
 ## installation
-Download this repository 
-```github
-git clone https://github.com/danioscx/pixabay-api-android.git
+```gradle
+implementation 'io.github.danioscx:Pixabay:1.0'
 ```
-after download open your android studio then click File->New->Import module 
-then locate this repo
 
 ### How to use 
 #### Image request
