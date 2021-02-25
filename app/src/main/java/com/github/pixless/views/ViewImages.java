@@ -1,6 +1,8 @@
 package com.github.pixless.views;
 
+import android.app.WallpaperManager;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -8,14 +10,21 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.github.pixless.R;
+import com.github.pixless.utils.CropWallpaperImages;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 
+import java.io.IOException;
 import java.util.List;
 
 import io.github.danioscx.Pixabay;
@@ -25,12 +34,30 @@ public class ViewImages extends AppCompatActivity {
 
     public static final String API_KEY = "16013870-0f4196b948c4f65ced4be7fff";
 
-    private Pixabay pix;
+    Pixabay pix;
+
+    ImageView imageViews;
+
+    FloatingActionButton fabMini;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_images);
-        ImageView imageView =  findViewById(R.id.images_shows);
+        FloatingActionButton floatingActionButton = findViewById(R.id.fab_normal);
+        fabMini = findViewById(R.id.fab_mini);
+        floatingActionButton.setOnClickListener(v -> {
+            if (fabMini.getVisibility() == View.GONE) {
+                fabMini.setVisibility(View.VISIBLE);
+                Animation animation = AnimationUtils.loadAnimation(getApplication(), R.anim.fab);
+                fabMini.startAnimation(animation);
+            } else {
+                Animation animation = AnimationUtils.loadAnimation(getApplication(), R.anim.fab_close);
+                fabMini.setVisibility(View.GONE);
+                fabMini.startAnimation(animation);
+            }
+        });
+        imageViews =  findViewById(R.id.images_shows);
         Intent intent = getIntent();
         if (intent != null) {
             pix = Pixabay.getInstance(this)
@@ -43,7 +70,14 @@ public class ViewImages extends AppCompatActivity {
                     Glide.with(ViewImages.this)
                             .load(images.get(0).getLargeImageURL())
                             .centerCrop()
-                            .into(imageView);
+                            .into(imageViews);
+                    fabMini.setOnClickListener(v -> {
+
+                        Intent intent1 = new Intent(getApplicationContext(), CropWallpaperImages.class);
+                        intent1.putExtra("title", images.get(0).getTags());
+                        intent1.putExtra("id", images.get(0).getId());
+                        startActivity(intent1);
+                    });
                 }
 
                 @Override
@@ -52,19 +86,6 @@ public class ViewImages extends AppCompatActivity {
                 }
             });
         }
-        FloatingActionButton floatingActionButton = findViewById(R.id.fab_normal);
-        FloatingActionButton fabMini = findViewById(R.id.fab_mini);
-        floatingActionButton.setOnClickListener(v -> {
-            if (fabMini.getVisibility() == View.GONE) {
-                fabMini.setVisibility(View.VISIBLE);
-                Animation animation = AnimationUtils.loadAnimation(getApplication(), R.anim.fab);
-                fabMini.startAnimation(animation);
-            } else {
-                Animation animation = AnimationUtils.loadAnimation(getApplication(), R.anim.fab_close);
-                fabMini.setVisibility(View.GONE);
-                fabMini.startAnimation(animation);
-            }
-        });
     }
 
     @Override
@@ -92,10 +113,21 @@ public class ViewImages extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        pix = null;
+    private void setOnWallpaperSelected(Images images) {
+        Glide.with(getApplication())
+                .asBitmap()
+                .load(images.getLargeImageURL())
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                        WallpaperManager wallpaperManager = WallpaperManager.getInstance(ViewImages.this);
+                        try {
+                            wallpaperManager.setBitmap(resource);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
     }
 
 }

@@ -3,4 +3,5 @@
     <string name="images">Images</string>
     <string name="videos">Videos</string>
     <string name="recycler_view_imageview">Recycler View ImageView</string>
+    <string name="set_to_wallpaper">set to wallpaper</string>
 </resources>
